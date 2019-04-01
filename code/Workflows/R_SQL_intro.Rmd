@@ -1,0 +1,114 @@
+---
+title: "Getting Data Efficiently from Microsoft Access into R"
+output: html_notebook
+---
+
+# Initial Setup
+
+You'll need the "odbc" package:
+
+```{r, eval=F}
+install.packages("odbc")
+```
+
+Next, load that package:
+
+```{r}
+library(odbc)
+```
+
+# Connecting R to Your Database
+
+
+## Accessing Microsoft Access Database with .accdb File Extension
+
+Check your installed drivers. If you don't see accdb download and install "AccessDatabaseEngine.exe". 
+
+
+## Accessing Microsoft Access Database with .mdb File Extension
+
+Next, make sure that you are running *32-bit* R. In RStudio, go to Tools -> Global Options, and then at the top of the window it will give you the option to change to change the R version. Change it to 32-bit, and restart R.
+
+Now, let's examine which drivers are available on your computer:
+```{r}
+sort(unique(odbcListDrivers()[[1]]))
+```
+
+Make sure that "Microsoft Access Driver (*.mdb)" is listed. If it is not, you will need to install the Microsoft Access Drivers. NEED INSTRUCTIONS FOR THIS SCENARIO.
+
+
+```{r, eval=F}
+# this works but doesn't get it in a format usable by dplyr
+con <- odbcDriverConnect('Driver={Microsoft Access Driver (*.mdb)};DBQ=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb')
+```
+
+
+
+
+con <- odbcDriverConnect('Driver={};DBQ=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb')
+
+
+
+Next, we tell R how to connect with our database, and then assign that database to a name (in this example, "contest"). The "Dbq" string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database.
+
+```{r}
+## THIS WORKS
+contest <- dbConnect(
+	drv = odbc::odbc(), 
+	.connection_string = "Driver={Microsoft Access Driver (*.mdb)}; Dbq=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb"
+)
+
+
+
+contest <- dbConnect(
+	drv = odbc::odbc(), 
+	.connection_string = "Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Misc/DatabaseTemplate.accdb"
+)
+```
+
+
+
+contest <- dbConnect(
+	drv = odbc::odbc(), 
+	dsn = "Nightlight"
+)
+
+
+
+# Processing Data From Microsoft Access in R
+
+First, load the "dplyr" and "dbplyr" packages. The "dplyr" package allows us to process our data by sorting, arranging, and selecting our data. The "dbplyr" package allows the "dplyr" package to work with data in a database.
+
+```{r}
+library(dplyr)
+library(dbplyr)
+```
+
+
+## Querying Data
+
+
+```{r}
+# load dplyr to run queries
+
+q1 <- tbl(contest, "MoonPhase") %>%
+  group_by(Date) %>%
+  summarise(
+    mean_illumination = mean(Illumination)
+  )
+show_query(q1)
+```
+
+
+```{r}
+# load dplyr to run queries
+
+q1 <- tbl(contest, "SpCount") %>%
+  group_by(Species) %>%
+  summarise(
+    mean_SpCount = mean(SpCount)
+  )
+show_query(q1)
+```
+
+## Merging/Aggregating Tables
