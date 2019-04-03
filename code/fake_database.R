@@ -37,7 +37,7 @@ ggplot(
 
 
 ExporttoACCDB <- function (
-	database.name = "C:/Users/Kristen.Sauby/Documents/Projects/Misc/DatabaseTemplate.accdb", 
+	database.name = "C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/EasternJackalope.accdb", 
 	x, 
 	tablename = as.character(1:length(x)),
 	...
@@ -50,6 +50,9 @@ ExporttoACCDB <- function (
 			sep=""
 		)
 	)
+	dbWriteTable(conn=mycon, value=JackalopeInfo, name = "JackalopeInfo", overwrite=T)
+	
+	
 	if (class(x) == "data.frame") 
 		dbWriteTable(mycon, x, tablename = tablename[1])
 	else for (i in 1:length(x)){
