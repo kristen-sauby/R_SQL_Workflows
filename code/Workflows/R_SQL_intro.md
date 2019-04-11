@@ -1,7 +1,7 @@
 Getting Data Efficiently from Microsoft Access Databases into R
 ================
 Kristen Sauby, Florida Fish and Wildlife Conservation Commission
-2019-04-11
+April 11, 2019
 
 -   [Initial Setup](#initial-setup)
     -   [Verify that neccessary drivers are installed](#verify-that-neccessary-drivers-are-installed)

@@ -1,7 +1,7 @@
 ---
 title: "Getting Data Efficiently from Microsoft Access Databases into R"
 author: "Kristen Sauby, Florida Fish and Wildlife Conservation Commission"  
-date: "`r format(Sys.Date())`"
+date: "`r format(Sys.Date(), '%n %B %d, %Y')`"
 output:  
  github_document:  
   toc: TRUE
