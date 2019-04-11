@@ -246,7 +246,7 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <div id="initial-setup" class="section level1">
 <h1>Initial Setup</h1>
-<p>You’ll need the “odbc” package:</p>
+<p>You’ll need the “odbc” package, which will allow you to set up a connection between R and your database.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiaW5zdGFsbC5wYWNrYWdlcyhcIm9kYmNcIikifQ== -->
@@ -257,15 +257,25 @@ $(document).ready(function () {
 <p>Next, load that package:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShvZGJjKVxuYGBgIn0= -->
+<pre class="r"><code>library(odbc)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="verify-that-neccessary-drivers-are-installed" class="section level2">
+<h2>Verify that neccessary drivers are installed</h2>
+<p>First, we need to verify that the appropriate Microsoft Access drivers are installed. Go to the Windows start menu, find search, and type “odbc”. An option should show up allowing you to click “ODBC data sources.” Click it. A window will open showing you a list of “User Data Sources.” Make sure that the driver “Micorsoft Access Driver (<em>.mdb, </em>accdb)” is listed. If not, contact your IT contact person to download and install the “AccessDatabaseEngine.exe”.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5jbHVkZV9ncmFwaGljcyhcIkM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRG9jdW1lbnRzL1Byb2plY3RzL0RhdGFfTWFuYWdlbWVudF9Xb3JrZmxvd3MvUl9TUUxfV29ya2Zsb3dzL2NvZGUvV29ya2Zsb3dzL1dpbmRvd3Nfc2VhcmNoLnBuZ1wiKVxuYGBgIn0= -->
+<pre class="r"><code>include_graphics(&quot;C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/Windows_search.png&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="connecting-r-to-your-database" class="section level1">
-<h1>Connecting R to Your Database</h1>
-<div id="accessing-microsoft-access-database-with-.accdb-file-extension" class="section level2">
-<h2>Accessing Microsoft Access Database with .accdb File Extension</h2>
-<p>Check your installed drivers. If you don’t see accdb download and install “AccessDatabaseEngine.exe”.</p>
 </div>
+<div id="accessing-microsoft-access-database-with-.accdb-file-extension" class="section level1">
+<h1>Accessing Microsoft Access Database with .accdb File Extension</h1>
 <div id="accessing-microsoft-access-database-with-.mdb-file-extension" class="section level2">
 <h2>Accessing Microsoft Access Database with .mdb File Extension</h2>
 <p>Next, make sure that you are running <em>32-bit</em> R. In RStudio, go to Tools -&gt; Global Options, and then at the top of the window it will give you the option to change to change the R version. Change it to 32-bit, and restart R.</p>
@@ -306,6 +316,10 @@ $(document).ready(function () {
 <p>Make sure that “Microsoft Access Driver (*.mdb)&quot; is listed. If it is not, you will need to install the Microsoft Access Drivers. NEED INSTRUCTIONS FOR THIS SCENARIO.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjpbIiMgdGhpcyB3b3JrcyBidXQgZG9lc24ndCBnZXQgaXQgaW4gYSBmb3JtYXQgdXNhYmxlIGJ5IGRwbHlyIiwiY29uIDwtIG9kYmNEcml2ZXJDb25uZWN0KCdEcml2ZXI9e01pY3Jvc29mdCBBY2Nlc3MgRHJpdmVyICgqLm1kYil9O0RCUT1DOi9Vc2Vycy9LcmlzdGVuLlNhdWJ5L0Rlc2t0b3AvTmlnaHRsaWdodF8yMDE4MTAxMS5tZGInKSJdfQ== -->
 <pre class="r"><code># this works but doesn't get it in a format usable by dplyr
 con &lt;- odbcDriverConnect('Driver={Microsoft Access Driver (*.mdb)};DBQ=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb')</code></pre>
@@ -316,6 +330,20 @@ con &lt;- odbcDriverConnect('Driver={Microsoft Access Driver (*.mdb)};DBQ=C:/Use
 <p>Next, we tell R how to connect with our database, and then assign that database to a name (in this example, “contest”). The “Dbq” string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMgVEhJUyBXT1JLU1xuY29udGVzdCA8LSBkYkNvbm5lY3QoXG5cdGRydiA9IG9kYmM6Om9kYmMoKSwgXG5cdC5jb25uZWN0aW9uX3N0cmluZyA9IFwiRHJpdmVyPXtNaWNyb3NvZnQgQWNjZXNzIERyaXZlciAoKi5tZGIpfTsgRGJxPUM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRGVza3RvcC9OaWdodGxpZ2h0XzIwMTgxMDExLm1kYlwiXG4pXG5cblxuXG5jb250ZXN0IDwtIGRiQ29ubmVjdChcblx0ZHJ2ID0gb2RiYzo6b2RiYygpLCBcblx0LmNvbm5lY3Rpb25fc3RyaW5nID0gXCJEcml2ZXI9e01pY3Jvc29mdCBBY2Nlc3MgRHJpdmVyICgqLm1kYiwgKi5hY2NkYil9OyBEYnE9QzovVXNlcnMvS3Jpc3Rlbi5TYXVieS9Eb2N1bWVudHMvUHJvamVjdHMvTWlzYy9EYXRhYmFzZVRlbXBsYXRlLmFjY2RiXCJcbilcbmBgYCJ9 -->
+<pre class="r"><code>## THIS WORKS
+contest &lt;- dbConnect(
+    drv = odbc::odbc(), 
+    .connection_string = &quot;Driver={Microsoft Access Driver (*.mdb)}; Dbq=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb&quot;
+)
+
+
+
+contest &lt;- dbConnect(
+    drv = odbc::odbc(), 
+    .connection_string = &quot;Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Misc/DatabaseTemplate.accdb&quot;
+)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>contest &lt;- dbConnect( drv = odbc::odbc(), dsn = “Nightlight” )</p>
@@ -350,21 +378,16 @@ show_query(q1)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucTEgPC0gdGJsKGNvbnRlc3QsIFwiU3BDb3VudFwiKSAlPiVcbiAgZ3JvdXBfYnkoU3BlY2llcykgJT4lXG4gIHN1bW1hcmlzZShcbiAgICBtZWFuX1NwQ291bnQgPSBtZWFuKFNwQ291bnQpXG4gIClcbnNob3dfcXVlcnkocTEpXG5cbmBgYCJ9 -->
-<pre class="r"><code>q1 &lt;- tbl(contest, &quot;SpCount&quot;) %&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb2FkIGRwbHlyIHRvIHJ1biBxdWVyaWVzXG5cbnExIDwtIHRibChjb250ZXN0LCBcIlNwQ291bnRcIikgJT4lXG4gIGdyb3VwX2J5KFNwZWNpZXMpICU+JVxuICBzdW1tYXJpc2UoXG4gICAgbWVhbl9TcENvdW50ID0gbWVhbihTcENvdW50KVxuICApXG5zaG93X3F1ZXJ5KHExKVxuYGBgIn0= -->
+<pre class="r"><code># load dplyr to run queries
+
+q1 &lt;- tbl(contest, &quot;SpCount&quot;) %&gt;%
   group_by(Species) %&gt;%
   summarise(
     mean_SpCount = mean(SpCount)
   )
-show_query(q1)
-</code></pre>
+show_query(q1)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiPFNRTD5cblNFTEVDVCBgU3BlY2llc2AsIEFWRyhgU3BDb3VudGApIEFTIGBtZWFuX1NwQ291bnRgXG5GUk9NIGBTcENvdW50YFxuR1JPVVAgQlkgYFNwZWNpZXNgXG4ifQ== -->
-<pre><code>&lt;SQL&gt;
-SELECT `Species`, AVG(`SpCount`) AS `mean_SpCount`
-FROM `SpCount`
-GROUP BY `Species`</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -374,7 +397,7 @@ GROUP BY `Species`</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldHRpbmcgRGF0YSBFZmZpY2llbnRseSBmcm9tIE1pY3Jvc29mdCBBY2Nlc3MgaW50byBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBJbml0aWFsIFNldHVwDQoNCllvdSdsbCBuZWVkIHRoZSAib2RiYyIgcGFja2FnZToNCg0KYGBge3IsIGV2YWw9Rn0NCmluc3RhbGwucGFja2FnZXMoIm9kYmMiKQ0KYGBgDQoNCk5leHQsIGxvYWQgdGhhdCBwYWNrYWdlOg0KDQpgYGB7cn0NCmxpYnJhcnkob2RiYykNCmBgYA0KDQojIENvbm5lY3RpbmcgUiB0byBZb3VyIERhdGFiYXNlDQoNCg0KIyMgQWNjZXNzaW5nIE1pY3Jvc29mdCBBY2Nlc3MgRGF0YWJhc2Ugd2l0aCAuYWNjZGIgRmlsZSBFeHRlbnNpb24NCg0KQ2hlY2sgeW91ciBpbnN0YWxsZWQgZHJpdmVycy4gSWYgeW91IGRvbid0IHNlZSBhY2NkYiBkb3dubG9hZCBhbmQgaW5zdGFsbCAiQWNjZXNzRGF0YWJhc2VFbmdpbmUuZXhlIi4gDQoNCg0KIyMgQWNjZXNzaW5nIE1pY3Jvc29mdCBBY2Nlc3MgRGF0YWJhc2Ugd2l0aCAubWRiIEZpbGUgRXh0ZW5zaW9uDQoNCk5leHQsIG1ha2Ugc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyAqMzItYml0KiBSLiBJbiBSU3R1ZGlvLCBnbyB0byBUb29scyAtPiBHbG9iYWwgT3B0aW9ucywgYW5kIHRoZW4gYXQgdGhlIHRvcCBvZiB0aGUgd2luZG93IGl0IHdpbGwgZ2l2ZSB5b3UgdGhlIG9wdGlvbiB0byBjaGFuZ2UgdG8gY2hhbmdlIHRoZSBSIHZlcnNpb24uIENoYW5nZSBpdCB0byAzMi1iaXQsIGFuZCByZXN0YXJ0IFIuDQoNCk5vdywgbGV0J3MgZXhhbWluZSB3aGljaCBkcml2ZXJzIGFyZSBhdmFpbGFibGUgb24geW91ciBjb21wdXRlcjoNCmBgYHtyfQ0Kc29ydCh1bmlxdWUob2RiY0xpc3REcml2ZXJzKClbWzFdXSkpDQpgYGANCg0KTWFrZSBzdXJlIHRoYXQgIk1pY3Jvc29mdCBBY2Nlc3MgRHJpdmVyICgqLm1kYikiIGlzIGxpc3RlZC4gSWYgaXQgaXMgbm90LCB5b3Ugd2lsbCBuZWVkIHRvIGluc3RhbGwgdGhlIE1pY3Jvc29mdCBBY2Nlc3MgRHJpdmVycy4gTkVFRCBJTlNUUlVDVElPTlMgRk9SIFRISVMgU0NFTkFSSU8uDQoNCg0KYGBge3IsIGV2YWw9Rn0NCiMgdGhpcyB3b3JrcyBidXQgZG9lc24ndCBnZXQgaXQgaW4gYSBmb3JtYXQgdXNhYmxlIGJ5IGRwbHlyDQpjb24gPC0gb2RiY0RyaXZlckNvbm5lY3QoJ0RyaXZlcj17TWljcm9zb2Z0IEFjY2VzcyBEcml2ZXIgKCoubWRiKX07REJRPUM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRGVza3RvcC9OaWdodGxpZ2h0XzIwMTgxMDExLm1kYicpDQpgYGANCg0KDQoNCg0KY29uIDwtIG9kYmNEcml2ZXJDb25uZWN0KCdEcml2ZXI9e307REJRPUM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRGVza3RvcC9OaWdodGxpZ2h0XzIwMTgxMDExLm1kYicpDQoNCg0KDQpOZXh0LCB3ZSB0ZWxsIFIgaG93IHRvIGNvbm5lY3Qgd2l0aCBvdXIgZGF0YWJhc2UsIGFuZCB0aGVuIGFzc2lnbiB0aGF0IGRhdGFiYXNlIHRvIGEgbmFtZSAoaW4gdGhpcyBleGFtcGxlLCAiY29udGVzdCIpLiBUaGUgIkRicSIgc3RyaW5nIHRlbGxzIFIgZXhhY3RseSB3aGVyZSB0aGUgZGF0YWJhc2UgaXMgc3RvcmVkLiBNYWtlIHN1cmUgdG8gY2hhbmdlIHRoZSBmaWxlIHBhdGggdG8gdGhlIGZpbGUgcGF0aCBvZiB5b3VyIGRhdGFiYXNlLg0KDQpgYGB7cn0NCiMjIFRISVMgV09SS1MNCmNvbnRlc3QgPC0gZGJDb25uZWN0KA0KCWRydiA9IG9kYmM6Om9kYmMoKSwgDQoJLmNvbm5lY3Rpb25fc3RyaW5nID0gIkRyaXZlcj17TWljcm9zb2Z0IEFjY2VzcyBEcml2ZXIgKCoubWRiKX07IERicT1DOi9Vc2Vycy9LcmlzdGVuLlNhdWJ5L0Rlc2t0b3AvTmlnaHRsaWdodF8yMDE4MTAxMS5tZGIiDQopDQoNCg0KDQpjb250ZXN0IDwtIGRiQ29ubmVjdCgNCglkcnYgPSBvZGJjOjpvZGJjKCksIA0KCS5jb25uZWN0aW9uX3N0cmluZyA9ICJEcml2ZXI9e01pY3Jvc29mdCBBY2Nlc3MgRHJpdmVyICgqLm1kYiwgKi5hY2NkYil9OyBEYnE9QzovVXNlcnMvS3Jpc3Rlbi5TYXVieS9Eb2N1bWVudHMvUHJvamVjdHMvTWlzYy9EYXRhYmFzZVRlbXBsYXRlLmFjY2RiIg0KKQ0KYGBgDQoNCg0KDQpjb250ZXN0IDwtIGRiQ29ubmVjdCgNCglkcnYgPSBvZGJjOjpvZGJjKCksIA0KCWRzbiA9ICJOaWdodGxpZ2h0Ig0KKQ0KDQoNCg0KIyBQcm9jZXNzaW5nIERhdGEgRnJvbSBNaWNyb3NvZnQgQWNjZXNzIGluIFINCg0KRmlyc3QsIGxvYWQgdGhlICJkcGx5ciIgYW5kICJkYnBseXIiIHBhY2thZ2VzLiBUaGUgImRwbHlyIiBwYWNrYWdlIGFsbG93cyB1cyB0byBwcm9jZXNzIG91ciBkYXRhIGJ5IHNvcnRpbmcsIGFycmFuZ2luZywgYW5kIHNlbGVjdGluZyBvdXIgZGF0YS4gVGhlICJkYnBseXIiIHBhY2thZ2UgYWxsb3dzIHRoZSAiZHBseXIiIHBhY2thZ2UgdG8gd29yayB3aXRoIGRhdGEgaW4gYSBkYXRhYmFzZS4NCg0KYGBge3J9DQpsaWJyYXJ5KGRwbHlyKQ0KbGlicmFyeShkYnBseXIpDQpgYGANCg0KDQojIyBRdWVyeWluZyBEYXRhDQoNCg0KYGBge3J9DQojIGxvYWQgZHBseXIgdG8gcnVuIHF1ZXJpZXMNCg0KcTEgPC0gdGJsKGNvbnRlc3QsICJNb29uUGhhc2UiKSAlPiUNCiAgZ3JvdXBfYnkoRGF0ZSkgJT4lDQogIHN1bW1hcmlzZSgNCiAgICBtZWFuX2lsbHVtaW5hdGlvbiA9IG1lYW4oSWxsdW1pbmF0aW9uKQ0KICApDQpzaG93X3F1ZXJ5KHExKQ0KYGBgDQoNCg0KYGBge3J9DQojIGxvYWQgZHBseXIgdG8gcnVuIHF1ZXJpZXMNCg0KcTEgPC0gdGJsKGNvbnRlc3QsICJTcENvdW50IikgJT4lDQogIGdyb3VwX2J5KFNwZWNpZXMpICU+JQ0KICBzdW1tYXJpc2UoDQogICAgbWVhbl9TcENvdW50ID0gbWVhbihTcENvdW50KQ0KICApDQpzaG93X3F1ZXJ5KHExKQ0KYGBgDQoNCiMjIE1lcmdpbmcvQWdncmVnYXRpbmcgVGFibGVzDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkdldHRpbmcgRGF0YSBFZmZpY2llbnRseSBmcm9tIE1pY3Jvc29mdCBBY2Nlc3MgaW50byBSIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBJbml0aWFsIFNldHVwDQoNCllvdSdsbCBuZWVkIHRoZSAib2RiYyIgcGFja2FnZSwgd2hpY2ggd2lsbCBhbGxvdyB5b3UgdG8gc2V0IHVwIGEgY29ubmVjdGlvbiBiZXR3ZWVuIFIgYW5kIHlvdXIgZGF0YWJhc2UuDQoNCmBgYHtyLCBldmFsPUZ9DQppbnN0YWxsLnBhY2thZ2VzKCJvZGJjIikNCmBgYA0KDQpOZXh0LCBsb2FkIHRoYXQgcGFja2FnZToNCmBgYHtyfQ0KbGlicmFyeShvZGJjKQ0KYGBgDQoNCiMjIFZlcmlmeSB0aGF0IG5lY2Nlc3NhcnkgZHJpdmVycyBhcmUgaW5zdGFsbGVkDQoNCkZpcnN0LCB3ZSBuZWVkIHRvIHZlcmlmeSB0aGF0IHRoZSBhcHByb3ByaWF0ZSBNaWNyb3NvZnQgQWNjZXNzIGRyaXZlcnMgYXJlIGluc3RhbGxlZC4gR28gdG8gdGhlIFdpbmRvd3Mgc3RhcnQgbWVudSwgZmluZCBzZWFyY2gsIGFuZCB0eXBlICJvZGJjIi4gQW4gb3B0aW9uIHNob3VsZCBzaG93IHVwIGFsbG93aW5nIHlvdSB0byBjbGljayAiT0RCQyBkYXRhIHNvdXJjZXMuIiBDbGljayBpdC4gQSB3aW5kb3cgd2lsbCBvcGVuIHNob3dpbmcgeW91IGEgbGlzdCBvZiAiVXNlciBEYXRhIFNvdXJjZXMuIiBNYWtlIHN1cmUgdGhhdCB0aGUgZHJpdmVyICJNaWNvcnNvZnQgQWNjZXNzIERyaXZlciAoKi5tZGIsICphY2NkYikiIGlzIGxpc3RlZC4gSWYgbm90LCBjb250YWN0IHlvdXIgSVQgY29udGFjdCBwZXJzb24gdG8gZG93bmxvYWQgYW5kIGluc3RhbGwgdGhlICJBY2Nlc3NEYXRhYmFzZUVuZ2luZS5leGUiLg0KDQpgYGB7ciwgZWNobyA9IFRSVUUsIG91dC53aWR0aD0iMzAlIn0NCmluY2x1ZGVfZ3JhcGhpY3MoIkM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRG9jdW1lbnRzL1Byb2plY3RzL0RhdGFfTWFuYWdlbWVudF9Xb3JrZmxvd3MvUl9TUUxfV29ya2Zsb3dzL2NvZGUvV29ya2Zsb3dzL1dpbmRvd3Nfc2VhcmNoLnBuZyIpDQpgYGANCg0KDQojIEFjY2Vzc2luZyBNaWNyb3NvZnQgQWNjZXNzIERhdGFiYXNlIHdpdGggLmFjY2RiIEZpbGUgRXh0ZW5zaW9uDQoNCg0KDQojIyBBY2Nlc3NpbmcgTWljcm9zb2Z0IEFjY2VzcyBEYXRhYmFzZSB3aXRoIC5tZGIgRmlsZSBFeHRlbnNpb24NCg0KTmV4dCwgbWFrZSBzdXJlIHRoYXQgeW91IGFyZSBydW5uaW5nICozMi1iaXQqIFIuIEluIFJTdHVkaW8sIGdvIHRvIFRvb2xzIC0+IEdsb2JhbCBPcHRpb25zLCBhbmQgdGhlbiBhdCB0aGUgdG9wIG9mIHRoZSB3aW5kb3cgaXQgd2lsbCBnaXZlIHlvdSB0aGUgb3B0aW9uIHRvIGNoYW5nZSB0byBjaGFuZ2UgdGhlIFIgdmVyc2lvbi4gQ2hhbmdlIGl0IHRvIDMyLWJpdCwgYW5kIHJlc3RhcnQgUi4NCg0KTm93LCBsZXQncyBleGFtaW5lIHdoaWNoIGRyaXZlcnMgYXJlIGF2YWlsYWJsZSBvbiB5b3VyIGNvbXB1dGVyOg0KYGBge3J9DQoNCnNvcnQodW5pcXVlKG9kYmNMaXN0RHJpdmVycygpW1sxXV0pKQ0KYGBgDQoNCk1ha2Ugc3VyZSB0aGF0ICJNaWNyb3NvZnQgQWNjZXNzIERyaXZlciAoKi5tZGIpIiBpcyBsaXN0ZWQuIElmIGl0IGlzIG5vdCwgeW91IHdpbGwgbmVlZCB0byBpbnN0YWxsIHRoZSBNaWNyb3NvZnQgQWNjZXNzIERyaXZlcnMuIE5FRUQgSU5TVFJVQ1RJT05TIEZPUiBUSElTIFNDRU5BUklPLg0KDQpgYGB7cn0NCg0KYGBgDQoNCg0KDQpgYGB7ciwgZXZhbD1GfQ0KIyB0aGlzIHdvcmtzIGJ1dCBkb2Vzbid0IGdldCBpdCBpbiBhIGZvcm1hdCB1c2FibGUgYnkgZHBseXINCmNvbiA8LSBvZGJjRHJpdmVyQ29ubmVjdCgnRHJpdmVyPXtNaWNyb3NvZnQgQWNjZXNzIERyaXZlciAoKi5tZGIpfTtEQlE9QzovVXNlcnMvS3Jpc3Rlbi5TYXVieS9EZXNrdG9wL05pZ2h0bGlnaHRfMjAxODEwMTEubWRiJykNCmBgYA0KDQoNCg0KDQpjb24gPC0gb2RiY0RyaXZlckNvbm5lY3QoJ0RyaXZlcj17fTtEQlE9QzovVXNlcnMvS3Jpc3Rlbi5TYXVieS9EZXNrdG9wL05pZ2h0bGlnaHRfMjAxODEwMTEubWRiJykNCg0KDQoNCk5leHQsIHdlIHRlbGwgUiBob3cgdG8gY29ubmVjdCB3aXRoIG91ciBkYXRhYmFzZSwgYW5kIHRoZW4gYXNzaWduIHRoYXQgZGF0YWJhc2UgdG8gYSBuYW1lIChpbiB0aGlzIGV4YW1wbGUsICJjb250ZXN0IikuIFRoZSAiRGJxIiBzdHJpbmcgdGVsbHMgUiBleGFjdGx5IHdoZXJlIHRoZSBkYXRhYmFzZSBpcyBzdG9yZWQuIE1ha2Ugc3VyZSB0byBjaGFuZ2UgdGhlIGZpbGUgcGF0aCB0byB0aGUgZmlsZSBwYXRoIG9mIHlvdXIgZGF0YWJhc2UuDQoNCmBgYHtyfQ0KIyMgVEhJUyBXT1JLUw0KY29udGVzdCA8LSBkYkNvbm5lY3QoDQoJZHJ2ID0gb2RiYzo6b2RiYygpLCANCgkuY29ubmVjdGlvbl9zdHJpbmcgPSAiRHJpdmVyPXtNaWNyb3NvZnQgQWNjZXNzIERyaXZlciAoKi5tZGIpfTsgRGJxPUM6L1VzZXJzL0tyaXN0ZW4uU2F1YnkvRGVza3RvcC9OaWdodGxpZ2h0XzIwMTgxMDExLm1kYiINCikNCg0KDQoNCmNvbnRlc3QgPC0gZGJDb25uZWN0KA0KCWRydiA9IG9kYmM6Om9kYmMoKSwgDQoJLmNvbm5lY3Rpb25fc3RyaW5nID0gIkRyaXZlcj17TWljcm9zb2Z0IEFjY2VzcyBEcml2ZXIgKCoubWRiLCAqLmFjY2RiKX07IERicT1DOi9Vc2Vycy9LcmlzdGVuLlNhdWJ5L0RvY3VtZW50cy9Qcm9qZWN0cy9NaXNjL0RhdGFiYXNlVGVtcGxhdGUuYWNjZGIiDQopDQpgYGANCg0KDQoNCmNvbnRlc3QgPC0gZGJDb25uZWN0KA0KCWRydiA9IG9kYmM6Om9kYmMoKSwgDQoJZHNuID0gIk5pZ2h0bGlnaHQiDQopDQoNCg0KDQojIFByb2Nlc3NpbmcgRGF0YSBGcm9tIE1pY3Jvc29mdCBBY2Nlc3MgaW4gUg0KDQpGaXJzdCwgbG9hZCB0aGUgImRwbHlyIiBhbmQgImRicGx5ciIgcGFja2FnZXMuIFRoZSAiZHBseXIiIHBhY2thZ2UgYWxsb3dzIHVzIHRvIHByb2Nlc3Mgb3VyIGRhdGEgYnkgc29ydGluZywgYXJyYW5naW5nLCBhbmQgc2VsZWN0aW5nIG91ciBkYXRhLiBUaGUgImRicGx5ciIgcGFja2FnZSBhbGxvd3MgdGhlICJkcGx5ciIgcGFja2FnZSB0byB3b3JrIHdpdGggZGF0YSBpbiBhIGRhdGFiYXNlLg0KDQpgYGB7cn0NCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KGRicGx5cikNCmBgYA0KDQoNCiMjIFF1ZXJ5aW5nIERhdGENCg0KDQpgYGB7cn0NCiMgbG9hZCBkcGx5ciB0byBydW4gcXVlcmllcw0KDQpxMSA8LSB0YmwoY29udGVzdCwgIk1vb25QaGFzZSIpICU+JQ0KICBncm91cF9ieShEYXRlKSAlPiUNCiAgc3VtbWFyaXNlKA0KICAgIG1lYW5faWxsdW1pbmF0aW9uID0gbWVhbihJbGx1bWluYXRpb24pDQogICkNCnNob3dfcXVlcnkocTEpDQpgYGANCg0KDQpgYGB7cn0NCiMgbG9hZCBkcGx5ciB0byBydW4gcXVlcmllcw0KDQpxMSA8LSB0YmwoY29udGVzdCwgIlNwQ291bnQiKSAlPiUNCiAgZ3JvdXBfYnkoU3BlY2llcykgJT4lDQogIHN1bW1hcmlzZSgNCiAgICBtZWFuX1NwQ291bnQgPSBtZWFuKFNwQ291bnQpDQogICkNCnNob3dfcXVlcnkocTEpDQpgYGANCg0KIyMgTWVyZ2luZy9BZ2dyZWdhdGluZyBUYWJsZXMNCg==</div>
 
 
 

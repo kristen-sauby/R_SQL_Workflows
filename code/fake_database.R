@@ -1,8 +1,12 @@
+setwd("C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows")
+
+library(chron)
+
 # create fake data about the Eastern Jackalope
 
 # JackalopeInfo
 JackalopeInfo <- as.data.frame(cbind(
-	ID_number = 1:6,
+	IDNumber = 1:6,
 	sex = rep(c("M","F"),3),
 	Site = c(
 		rep("Paynes Prairie", 2),
@@ -13,10 +17,16 @@ JackalopeInfo <- as.data.frame(cbind(
 
 # JackalopeSurveys
 JackalopeSurveys <- expand.grid(
-	ID_number = 1:6,
-	Survey_Date = seq(as.Date("2000/1/1"), by = "month", length.out = 6)
+	IDNumber = 1:6,
+	SurveyDate = format(
+		seq.Date(
+			as.Date("2000/1/1"), by = "month", length.out = 6
+		),
+		"%Y-%m-%d %H:%M:%S"
+	)
 ) %>%
-	arrange(ID_number)
+	arrange(IDNumber) %>%
+	as.data.frame
 
 JackalopeSurveys$Weight <- c(
 	runif(6,min=8100,max=8200),
@@ -26,6 +36,14 @@ JackalopeSurveys$Weight <- c(
 	runif(6,min=5000,max=5100),
 	runif(6,min=6600,max=6700)
 )
+
+write.csv(JackalopeInfo, "./data/JackalopeInfo.csv")
+write.csv(JackalopeSurveys, "./data/JackalopeSurveys.csv")
+
+
+
+
+
 
 ggplot(
 	JackalopeSurveys, 

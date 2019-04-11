@@ -1,114 +1,159 @@
 ---
-title: "Getting Data Efficiently from Microsoft Access into R"
-output: html_notebook
+title: "Getting Data Efficiently from Microsoft Access Databases into R"
+output:
+  github_document:
+    toc: TRUE
 ---
+
+```{r, include=FALSE}
+library(knitr)
+library(magrittr)
+library(tidyverse)
+knitr::opts_chunk$set(warning=FALSE)
+```
+
 
 # Initial Setup
 
-You'll need the "odbc" package:
+You'll need the "odbc" package, which will allow you to set up a connection between R and your database.
 
-```{r, eval=F}
+```{r, eval=F, include=TRUE}
 install.packages("odbc")
 ```
 
 Next, load that package:
-
-```{r}
+```{r, include=TRUE}
 library(odbc)
 ```
 
-# Connecting R to Your Database
+## Verify that neccessary drivers are installed
+
+### Via R
+
+Examine which drivers are available on your computer. Make sure that "Micorsoft Access Driver (\*.mdb, \*accdb)" is listed.
+
+```{r, include=TRUE}
+sort(unique(odbcListDrivers()[[1]]))
+```
 
 
-## Accessing Microsoft Access Database with .accdb File Extension
+### Via the ODBC Data Source Administrator
 
-Check your installed drivers. If you don't see accdb download and install "AccessDatabaseEngine.exe". 
+Go to the Windows start menu and find search.
+
+```{r, out.width="30%", echo=FALSE}
+include_graphics("C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/Windows_search.png")
+```
+
+Type "odbc". An option should show up allowing you to click "ODBC Data Sources." Click it.
+
+```{r, out.width="30%", echo=FALSE}
+include_graphics("C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/odbc.png")
+```
+ 
+A window will open showing you a list of "User Data Sources."  Make sure that the driver "Micorsoft Access Driver (\*.mdb, \*accdb)" is listed.
+
+```{r, out.width="60%", echo=FALSE}
+include_graphics("C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/drivers.png")
+```
+
+
+## Installing the Microsoft Access Driver (If Necessary)
+
+If the appropriate driver is not installed on your computer, contact your IT contact person to download and install the  ["AccessDatabaseEngine.exe"](https://www.microsoft.com/en-us/download/details.aspx?id=54920 "Access Database Engine").
+
+
+<!--  ## Accessing Microsoft Access Database with .accdb File Extension
+
 
 
 ## Accessing Microsoft Access Database with .mdb File Extension
 
 Next, make sure that you are running *32-bit* R. In RStudio, go to Tools -> Global Options, and then at the top of the window it will give you the option to change to change the R version. Change it to 32-bit, and restart R.
 
-Now, let's examine which drivers are available on your computer:
-```{r}
-sort(unique(odbcListDrivers()[[1]]))
-```
-
-Make sure that "Microsoft Access Driver (*.mdb)" is listed. If it is not, you will need to install the Microsoft Access Drivers. NEED INSTRUCTIONS FOR THIS SCENARIO.
-
-
 ```{r, eval=F}
 # this works but doesn't get it in a format usable by dplyr
 con <- odbcDriverConnect('Driver={Microsoft Access Driver (*.mdb)};DBQ=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb')
 ```
+-->
 
 
 
-
-con <- odbcDriverConnect('Driver={};DBQ=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb')
-
+# Connecting to a  Microsoft Access Database in R
 
 
-Next, we tell R how to connect with our database, and then assign that database to a name (in this example, "contest"). The "Dbq" string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database.
+Next, we tell R how to connect with our database, and then assign that database to a name (in this example, "jackalope"). The "Dbq" string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database.
 
-```{r}
-## THIS WORKS
-contest <- dbConnect(
+```{r, include=TRUE}
+jackalope <- dbConnect(
 	drv = odbc::odbc(), 
-	.connection_string = "Driver={Microsoft Access Driver (*.mdb)}; Dbq=C:/Users/Kristen.Sauby/Desktop/Nightlight_20181011.mdb"
-)
-
-
-
-contest <- dbConnect(
-	drv = odbc::odbc(), 
-	.connection_string = "Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Misc/DatabaseTemplate.accdb"
+	.connection_string = "Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/EasternJackalope.accdb"
 )
 ```
 
 
+Next, we can use the `dbListTables` function to show us the tables that are now available because of our database connection. The tables that we are interested in are "JackalopeInfo" and "JackalopeSurveys."
 
-contest <- dbConnect(
-	drv = odbc::odbc(), 
-	dsn = "Nightlight"
-)
+```{r, include=TRUE}
+dbListTables(jackalope)
+```
+
+# Working With Data From the Database
 
 
+Now that we have established a connection to our database, we can start working with the actual data.
 
-# Processing Data From Microsoft Access in R
+## Read in a Table
+
+We can use the `dbReadTable` in the `DBI` package to read tables into R.
+
+```{r, include=TRUE, message=FALSE}
+library(DBI)
+
+JackalopeSurveys <- dbReadTable(jackalope, "JackalopeSurveys")
+head(JackalopeSurveys)
+```
+
+## Manipulate the Data Using `dplyr`
 
 First, load the "dplyr" and "dbplyr" packages. The "dplyr" package allows us to process our data by sorting, arranging, and selecting our data. The "dbplyr" package allows the "dplyr" package to work with data in a database.
 
-```{r}
+```{r, include=TRUE, message=FALSE}
 library(dplyr)
 library(dbplyr)
 ```
 
-
-## Querying Data
-
+As an example, let's summarize the data in the "JackalopeSurveys" table.
 
 ```{r}
 # load dplyr to run queries
 
-q1 <- tbl(contest, "MoonPhase") %>%
-  group_by(Date) %>%
+q1 <- tbl(jackalope, "JackalopeSurveys") %>%
+  group_by(IDNumber) %>%
   summarise(
-    mean_illumination = mean(Illumination)
+    AverageWeight = mean(Weight)
   )
+q1
+```
+
+
+R will also translate our R code into an SQL query using the `show_query` function:
+```{r}
 show_query(q1)
 ```
 
+
+## Merging Tables
+
+We can also easily merge tables. For example, let's merge the `JackalopeInfo` and `JackalopeSurveys` tables so that we can group the weight information by the sex of the jackalopes.
 
 ```{r}
-# load dplyr to run queries
-
-q1 <- tbl(contest, "SpCount") %>%
-  group_by(Species) %>%
-  summarise(
-    mean_SpCount = mean(SpCount)
-  )
-show_query(q1)
+Jackalopes <- tbl(jackalope, "JackalopeInfo") %>%
+	merge(
+		tbl(jackalope, "JackalopeSurveys"), 
+		by="IDNumber"
+	)
+head(Jackalopes)
 ```
 
-## Merging/Aggregating Tables
+Now we can do fun things with our data, like analysis or plotting.
