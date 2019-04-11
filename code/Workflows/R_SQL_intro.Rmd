@@ -1,8 +1,11 @@
 ---
 title: "Getting Data Efficiently from Microsoft Access Databases into R"
-output:
-  github_document:
-    toc: TRUE
+author: "Jenny Bryan"  
+date: "`r format(Sys.Date())`"
+output:  
+ html_document:  
+  keep_md: true  
+  toc: TRUE
 ---
 
 ```{r, include=FALSE}
@@ -87,7 +90,7 @@ Next, we tell R how to connect with our database, and then assign that database 
 ```{r, include=TRUE}
 jackalope <- dbConnect(
 	drv = odbc::odbc(), 
-	.connection_string = "Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/EasternJackalope.accdb"
+	.connection_string = "Driver={Microsoft Access Driver (*.mdb, *.accdb)}; Dbq=C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/EasternJackalope.accdb"
 )
 ```
 
