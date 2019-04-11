@@ -1,6 +1,6 @@
 Getting Data Efficiently from Microsoft Access Databases into R
 ================
-Jenny Bryan
+Kristen Sauby
 2019-04-11
 
 -   [Initial Setup](#initial-setup)
@@ -72,11 +72,11 @@ Go to the Windows start menu and find search.
 
 Type "odbc". An option should show up allowing you to click "ODBC Data Sources." Click it.
 
-<img src="C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/odbc.png" width="30%" />
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/odbc.png" width="30%" />
 
 A window will open showing you a list of "User Data Sources." Make sure that the driver "Micorsoft Access Driver (\*.mdb, \*accdb)" is listed.
 
-<img src="C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/drivers.png" width="60%" />
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/drivers.png" width="60%" />
 
 Installing the Microsoft Access Driver (If Necessary)
 -----------------------------------------------------
