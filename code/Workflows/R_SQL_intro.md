@@ -1,6 +1,6 @@
 Getting Data Efficiently from Microsoft Access Databases into R
 ================
-Kristen Sauby
+Kristen Sauby, Florida Fish and Wildlife Conservation Commission
 2019-04-11
 
 -   [Initial Setup](#initial-setup)
@@ -100,7 +100,7 @@ con <- odbcDriverConnect('Driver={Microsoft Access Driver (*.mdb)};DBQ=C:/Users/
 Connecting to a Microsoft Access Database in R
 ==============================================
 
-Next, we tell R how to connect with our database, and then assign that database to a name (in this example, "jackalope"). The "Dbq" string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database.
+Next, we tell R how to connect with our database, and then assign that database to a name (in this example, "jackalope"). The "Dbq" string tells R exactly where the database is stored. Make sure to change the file path to the file path of your database. You can download the example "EasternJackalope" Access Database [here](https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/EasternJackalope.accdb "Eastern Jackalope Data! =D").
 
 ``` r
 jackalope <- dbConnect(
