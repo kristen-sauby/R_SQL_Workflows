@@ -45,7 +45,7 @@ sort(unique(odbcListDrivers()[[1]]))
 Go to the Windows start menu and find search.
 
 ```{r, out.width="30%", echo=FALSE}
-include_graphics("C:/Users/Kristen.Sauby/Documents/Projects/Data_Management_Workflows/R_SQL_Workflows/code/Workflows/Windows_search.png")
+include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/Windows_search.png")
 ```
 
 Type "odbc". An option should show up allowing you to click "ODBC Data Sources." Click it.
