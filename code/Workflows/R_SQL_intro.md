@@ -1,9 +1,10 @@
 Getting Data Efficiently from Microsoft Access Databases into R
 ================
-Kristen Sauby, Florida Fish and Wildlife Conservation Commission
-April 11, 2019
+Kristen Sauby, Florida Fish and Wildlife Conservation Commission,
+April 12, 2019
 
 -   [Initial Setup](#initial-setup)
+    -   [Verify that you are running 32-bit R](#verify-that-you-are-running-32-bit-r)
     -   [Verify that neccessary drivers are installed](#verify-that-neccessary-drivers-are-installed)
         -   [Via R](#via-r)
         -   [Via the ODBC Data Source Administrator](#via-the-odbc-data-source-administrator)
@@ -28,6 +29,17 @@ Next, load that package:
 ``` r
 library(odbc)
 ```
+
+Verify that you are running 32-bit R
+------------------------------------
+
+Since we are running 32-bit Microsoft Access on our machines, we also need to verify that we are running 32-bit R. This is easy to verify in RStudio. Go to Tools, then select Global Options.
+
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/GlobalOptions.png" width="30%" />
+
+Then, if necessary, change the version of R that you are running to the 32-bit version.
+
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/RStudio32bit.png" width="30%" />
 
 Verify that neccessary drivers are installed
 --------------------------------------------
