@@ -39,7 +39,7 @@ Since we are running 32-bit Microsoft Access on our machines, we also need to ve
 
 Then, if necessary, change the version of R that you are running to the 32-bit version.
 
-<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/code/Workflows/RStudio32bit.png" width="30%" />
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/code/Workflows/RStudio32bit.PNG" width="30%" />
 
 Verify that neccessary drivers are installed
 --------------------------------------------
