@@ -35,11 +35,11 @@ Verify that you are running 32-bit R
 
 Since we are running 32-bit Microsoft Access on our machines, we also need to verify that we are running 32-bit R. This is easy to verify in RStudio. Go to Tools, then select Global Options.
 
-<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/GlobalOptions.png" width="30%" />
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/GlobalOptions.png" width="35%" />
 
 Then, if necessary, change the version of R that you are running to the 32-bit version.
 
-<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/RStudio32bit.jpg" width="30%" />
+<img src="https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/RStudio32bit.jpg" width="55%" />
 
 Verify that neccessary drivers are installed
 --------------------------------------------

@@ -32,13 +32,13 @@ library(odbc)
 
 Since we are running 32-bit Microsoft Access on our machines, we also need to verify that we are running 32-bit R. This is easy to verify in RStudio. Go to Tools, then select Global Options.
 
-```{r, out.width="30%", echo=FALSE}
+```{r, out.width="35%", echo=FALSE}
 include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/GlobalOptions.png")
 ```
 
 Then, if necessary, change the version of R that you are running to the 32-bit version.
 
-```{r, out.width="30%", echo=FALSE}
+```{r, out.width="55%", echo=FALSE}
 include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/code/Workflows/RStudio32bit.jpg")
 ```
 
