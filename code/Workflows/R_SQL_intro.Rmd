@@ -39,7 +39,7 @@ include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/blob/master/c
 Then, if necessary, change the version of R that you are running to the 32-bit version.
 
 ```{r, out.width="30%", echo=FALSE}
-include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/code/Workflows/RStudio32bit.PNG")
+include_graphics("https://github.com/kristen-sauby/R_SQL_Workflows/code/Workflows/RStudio32bit.jpg")
 ```
 
 
